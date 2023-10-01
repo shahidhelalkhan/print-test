@@ -141,11 +141,12 @@ private fun preprocessImgTag(printer: EscPosPrinter, text: String): String {
     var cut = if (params.hasKey(keyCut)) params.getBoolean(keyCut) else false
     var keyText = "text"
     var text = if (params.hasKey(keyText)) params.getString(keyText) else null
-    text = preprocessImgTag(printer, text);
     var keyRaw = "raw"
     var raw = if (params.hasKey(keyRaw)) readableArrayToByteArray(params.getArray(keyRaw)) else null
     var context = reactApplicationContext
     var usbConnection = UsbPrintersConnections.selectFirstConnected(context);
+    EscPosPrinter printer = var printer = EscPosPrinter(usbConnection, 203, 48f, 32);
+    text = preprocessImgTag(printer, text);
     var usbManager = context.getSystemService(Context.USB_SERVICE) as UsbManager?;
     if (usbConnection != null && usbManager != null) {
       var permissionIntent = PendingIntent.getBroadcast(context, 0, Intent(ACTION_USB_PERMISSION), 0);
